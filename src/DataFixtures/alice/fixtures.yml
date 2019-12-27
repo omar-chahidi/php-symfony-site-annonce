@@ -1,0 +1,45 @@
+App\Entity\User:
+  user_bob:
+    name: 'chahidi'
+    firstName: 'omar'
+    email: 'omarchahidi@gmail.com'
+    password: '123'
+
+  user{1..20}:
+    name: <lastName()>
+    firstName: <firstName()>
+    email: <email()>
+    password: '123'
+
+App\Entity\Category:
+  category1:
+    title: 'EMPLOI'
+
+  category2:
+    title: 'MODE'
+
+  category3:
+    title: 'MAISON'
+
+  category4:
+    title: 'LOISIRS'
+
+  category5:
+    title: 'MULTIMEDIA'
+
+  category6:
+    title: 'SERVICES'
+
+  category7:
+    title: 'IMMOBILIER'
+
+  category8:
+    title: 'DIVERS'
+
+App\Entity\Announcement:
+  announcement{1..500}:
+    title: <sentence(6, true)>
+    announcementContent: <paragraphs(3, true)>
+    createdAt: <dateTimeThisYear('now')>
+    author: '@user*'
+    category: '@category*'
