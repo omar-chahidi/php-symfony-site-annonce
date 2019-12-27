@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('style') }}
+        {% endblock %}
+    </head>
+    <body class="container-fluid">
+        <div class="row justify-content-center">
+            {% block nav %}
+                <ul class="col-12 mt-2 mb-2 nav">
+                    <li class="nav-item">Inscription</li>
+                    <li class="nav-item">Login</li>
+                    <li class="nav-item">Listes des annonces</li>
+                    <li class="nav-item">Listes des catégories</li>
+                </ul>
+            {% endblock %}
+            <div class="col-md-8">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>
