@@ -3,13 +3,13 @@ App\Entity\User:
     name: 'chahidi'
     firstName: 'omar'
     email: 'omarchahidi@gmail.com'
-    password: '123'
+    plainPassword: '123'
 
   user{1..20}:
     name: <lastName()>
     firstName: <firstName()>
     email: <email()>
-    password: '123'
+    plainPassword: '123'
 
 App\Entity\Category:
   category1:
