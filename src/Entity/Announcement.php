@@ -32,6 +32,29 @@ class Announcement
     private $announcementContent;
 
     /**
+     * @ORM\Column(type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $price;
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     * @return Announcement
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="announcements")
      * @ORM\JoinColumn(nullable=false)
      */

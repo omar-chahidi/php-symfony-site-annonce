@@ -43,3 +43,4 @@ App\Entity\Announcement:
     createdAt: <dateTimeThisYear('now')>
     author: '@user*'
     category: '@category*'
+    price: <numberBetween(1, 1000000)>
