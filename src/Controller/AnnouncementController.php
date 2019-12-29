@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Announcement;
+use App\Entity\Category;
 use App\Form\AnnouncementType;
 use App\Repository\AnnouncementRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,9 +28,12 @@ class AnnouncementController extends AbstractController
             15
         );
 
-        return $this->render('announcement/index.html.twig', [
-            'announcementList' => $announcementList,
-        ]);
+        //return $this->render('announcement/index.html.twig', [ 'announcementList' => $announcementList,]);
+
+        $params = $this->getTwigParametersWithAside(
+            ['announcementList' => $announcementList]
+        );
+        return $this->render('announcement/index.html.twig', $params);
     }
 
 
@@ -76,13 +80,9 @@ class AnnouncementController extends AbstractController
      * on utilise implicitement un param converter
      */
 
-    /*
-     * http://localhost:8000/article/1
-     * @Route("/{id}", name="article-details")
-     * @param Article $article
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
+
     /**
+     * http://localhost:8000/2010
      * @Route("/{id}", name="announcement-details", requirements={"id"="\d+"})
      * @param Announcement $annonce
      * @return \Symfony\Component\HttpFoundation\Response
@@ -93,6 +93,47 @@ class AnnouncementController extends AbstractController
             'annonce' => $annonce,
         ]);
     }
+
+    /**
+     * http://localhost:8000/by-category/43
+     * @Route("/by-category/{id}", name="announcement-by-category")
+     * @param Category $category
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showByCategory(Category $category, PaginatorInterface $paginator, Request $request){
+         $announcementList = $paginator->paginate(
+            $this->getDoctrine()->getRepository(Announcement::class)->getAllByCategory($category),
+            $request->query->getInt('page', 1),
+            10
+        );
+        //return $this->render('announcement/index.html.twig', ['announcementList' => $announcementList ]);
+
+        $params = $this->getTwigParametersWithAside(
+            ['announcementList' => $announcementList]
+        );
+        return $this->render('announcement/index.html.twig', $params);
+    }
+    /*
+    public function showByCategory(Category $category){
+        $announcementList = $this   ->getDoctrine()
+                                    ->getRepository(Announcement::class)
+                                    ->getAllByCategory($category)
+        ;
+        return $this->render('announcement/index.html.twig', ['announcementList' => $announcementList ]);
+    }
+    */
+
+    private function getTwigParametersWithAside($data){
+        $asideData = [
+            'categoryList' => $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->findAll()
+        ];
+        return array_merge($data, $asideData );
+    }
+
 
 
 }

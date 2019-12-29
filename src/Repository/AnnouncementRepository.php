@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Announcement;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -26,6 +27,19 @@ class AnnouncementRepository extends ServiceEntityRepository
                         ->getQuery()
         ;
     }
+
+
+    public function getAllByCategory(Category $category){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->join('a.category', 'cat')
+            ->where('cat.id = :id')
+            ->setParameter('id', $category->getId())
+            ->orderBy('a.createdAt', 'DESC')
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Announcement[] Returns an array of Announcement objects
     //  */

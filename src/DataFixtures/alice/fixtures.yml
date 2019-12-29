@@ -35,7 +35,7 @@ App\Entity\Category:
     title: 'DIVERS'
 
 App\Entity\Announcement:
-  announcement{1..5}:
+  announcement{1..100}:
     title: <sentence(6, true)>
     announcementContent: <paragraphs(3, true)>
     createdAt: <dateTimeThisYear('now')>

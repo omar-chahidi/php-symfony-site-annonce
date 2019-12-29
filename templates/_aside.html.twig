@@ -1,0 +1,13 @@
+<div class="col-md-3 mt-3">
+    <h3>Catégorie des annonces</h3>
+    <ul class="list-group">
+        {% for category in categoryList %}
+            <li class="list-group-item">
+                <a href="{{ path('announcement-by-category', {'id': category.id}) }}">{{ category.title }}</a>
+                <span class="badge badge-info badge-pill">
+                    {{ category.announcements | length }}
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -35,7 +35,13 @@
 
     </table>
 
+
+    {# #}
     {{ knp_pagination_render(announcementList) }}
 
+{% endblock %}
+
+{% block aside %}
+    {% include '_aside.html.twig' %}
 {% endblock %}
 

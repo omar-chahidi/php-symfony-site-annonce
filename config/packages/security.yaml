@@ -17,6 +17,9 @@ security:
                 login_path: security-login
                 check_path: security-login
                 default_target_path: announcement-list
+            logout:
+                path: logout
+                target: announcement-list
 
 
             # activate different ways to authenticate
