@@ -1,0 +1,21 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section>
+        <!-- ETAPE 2: Afficher un SEUL article sans comment  -->
+        <article>
+            <h1>Annonce   : {{ annonce.title }}</h1>
+            <h3>Categorie : {{ annonce.category.title }}</h3>
+            <h4>Prix      : {{ annonce.price  }}</h4>
+            <p>
+                {{ annonce.announcementContent }}
+            </p>
+             <p>
+                Le : {{ annonce.createdAt | date('d/m/Y') }}
+            </p>
+        </article>
+
+    </section>
+
+{% endblock %}

@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnnouncementController!{% endblock %}
+{% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if is_granted('ROLE_USER')%}
+        <div class="text-right mb-2">
+            <a href="{{ path('announcement-create') }}" class="btn btn-primary">
+                Nouvelle annonce
+            </a>
+        </div>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Utilisateur/Documents/php/symfony-site-annonces/src/Controller/AnnouncementController.php'|file_link(0) }}">src/Controller/AnnouncementController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Utilisateur/Documents/php/symfony-site-annonces/templates/announcement/index.html.twig'|file_link(0) }}">templates/announcement/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Annonce</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Date de publication</th>
+            <th>Auteur</th>
+        </tr>
+
+        {% for announcement in announcementList %}
+            <tr>
+                <td>
+                    <a href="{{ path('announcement-details', {'id': announcement.id}) }}">{{ announcement.getTitle }}</a>
+                </td>
+                <td>{{ announcement.category.title }}</td>
+                <td>{{ announcement.price }}</td>
+                <td>{{ announcement.createdAt | date('d/m/Y') }}</td>
+                <td>{{ announcement.author.email }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {{ knp_pagination_render(announcementList) }}
+
 {% endblock %}
+
