@@ -8,6 +8,7 @@ use App\Form\AnnouncementType;
 use App\Repository\AnnouncementRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -62,6 +63,49 @@ class AnnouncementController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            // Gestion de l'opload des photos
+            // recuperation un element saisie dans le furmulaire
+            /**
+             * pour avoir de autocompletion sur cette method
+             * @var UploadedFile $uploadedFile
+             */
+            $uploadedFile = $form['photoInput']->getData();
+            // je fais le traitement lorsque je telechareg une image et je verifie ques c'est bien un bon
+            // fichier avec la lecture de l entete
+            if ($uploadedFile){
+                /*
+                // Définition du nom du fichier. guessExtension pour avoir la vrai extention en fonction de
+                // l'entête du fichier binaire
+                $newFileName = md5(uniqid('photo_')).'.'. $uploadedFile->guessExtension();
+                // Déplacement de l'upload dans son dossier de destination
+                $uploadedFile->move(
+                    $this->getParameter('article.photo.path'),
+                    $newFileName
+                );
+                */
+
+
+                foreach ($uploadedFile as $fileName){
+                    // Définition du nom du fichier. guessExtension pour avoir la vrai extention en fonction de
+                    // l'entête du fichier binaire
+                    $newFileName = md5(uniqid()).'.'. $fileName->guessExtension();
+                    // Déplacement de l'upload dans son dossier de destination
+                    $fileName->move(
+                        $this->getParameter('article.photo.path'),
+                        $newFileName
+                    );
+                    // Ecrire le nom du fichier dans l'entité
+                    $announcement->setPhoto($newFileName);
+
+                    dump($announcement->getPhoto());
+                }
+                /*
+                // Ecrire le nom du fichier dans l'entité
+                $announcement->setPhoto($newFileName);
+                */
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($announcement);
             $em->flush();

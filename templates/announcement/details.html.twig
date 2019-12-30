@@ -5,13 +5,21 @@
     <section>
         <!-- ETAPE 2: Afficher un SEUL article sans comment  -->
         <article>
-            <h1>Annonce   : {{ annonce.title }}</h1>
-            <h3>Categorie : {{ annonce.category.title }}</h3>
-            <h4>Prix      : {{ annonce.price  }}</h4>
+            <p>
+                {% if annonce.photo is defined  %}
+                    {% dump(annonce.photo) %}
+                    <img src="{{ asset('uploads/photos/' ~ annonce.photo) }}" class="img-fluid" alt="image">
+                {% endif %}
+            </p>
+
+            <h3>Annonce   : {{ annonce.title }}</h3>
+            <h5>Categorie : {{ annonce.category.title }}</h5>
+
             <p>
                 {{ annonce.announcementContent }}
             </p>
-             <p>
+            <h4 style="color: #C82829">Prix      : {{ annonce.price  }}</h4>
+            <p>
                 Le : {{ annonce.createdAt | date('d/m/Y') }}
             </p>
         </article>

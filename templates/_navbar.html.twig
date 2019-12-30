@@ -7,25 +7,44 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('announcement-list') }}">Liste des annonces <span class="sr-only">(current)</span></a>
+                <button class="btn btn-outline-warning" type="button">
+                    <a class="nav-link" href="{{ path('announcement-list') }}">Liste des annonces <span class="sr-only">(current)</span></a>
+                </button>
             </li>
 
+            {% if is_granted('ROLE_USER')%}
+                <li class="nav-item">
+                    <button class="btn btn-outline-success" type="button">
+                        <a href="{{ path('announcement-create')}}" class="nav-link">Création nouvelle annonce</a>
+                    </button>
+                </li>
+            {% endif %}
+
+
             <li class="nav-item">
-                <a href="{{ path('user-insciption')}}" class="nav-link">Inscription</a>
+                <button class="btn btn-outline-info" type="button">
+                    <a href="{{ path('user-insciption')}}" class="nav-link">Inscription</a>
+                </button>
             </li>
 
             {% if app.user.username is defined %}
                 <li class="nav-item navbar-text">
-                    <!-- jappelle la methode getusername-->
-                    {{ app.user.username }}
+                    <button class="btn btn-outline" type="button">
+                        <!-- jappelle la methode getusername-->
+                        {{ app.user.username }}
+                    </button>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ path('logout') }}" class="nav-link">Logout</a>
+                    <button class="btn btn-outline-danger" type="button">
+                        <a href="{{ path('logout') }}" class="nav-link">Logout</a>
+                    </button>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a href="{{ path('security-login')}}" class="nav-link">Login</a>
+                    <button class="btn btn-outline-danger" type="button">
+                        <a href="{{ path('security-login')}}" class="nav-link">Login</a>
+                    </button>
                 </li>
             {% endif %}
 
